@@ -1,0 +1,31 @@
+.stat-block {
+  padding-left: var(--space-md);
+  border-left: 2px solid var(--amber-primary);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw + 0.5rem, 3.25rem); /* 32px to 52px */
+  font-weight: 800;
+  line-height: 1;
+  color: var(--amber-primary);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-top: var(--space-2xs);
+}
+
+.stat-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}

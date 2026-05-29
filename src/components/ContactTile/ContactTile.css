@@ -1,0 +1,80 @@
+/* Contact Tile modular stylesheet */
+.contact-tile {
+  background: rgba(24, 24, 24, 0.6);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+}
+
+.contact-tile:hover {
+  border-color: var(--amber-primary);
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateY(-1px);
+}
+
+.contact-tile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amber-primary);
+  flex-shrink: 0;
+  transition: border-color 0.2s ease;
+}
+
+.contact-tile:hover .contact-tile-icon {
+  border-color: var(--amber-primary);
+}
+
+.contact-tile-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-tile-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+.contact-tile-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.copy-tooltip {
+  position: absolute;
+  top: -30px;
+  right: var(--space-md);
+  background: var(--amber-primary);
+  color: var(--bg-base);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 4px var(--space-sm);
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: var(--z-tooltip);
+}
+
+.copy-tooltip-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

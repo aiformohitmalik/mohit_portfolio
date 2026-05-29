@@ -1,0 +1,50 @@
+/* Skills Section modular stylesheet */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--card-gap);
+  margin-bottom: var(--space-xl);
+}
+
+@media (max-width: 900px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skills-footer-row {
+  margin-top: var(--space-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-top: 1px solid var(--border-default);
+  padding-top: var(--space-lg);
+}
+
+.skills-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.skills-legend-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  color: var(--text-tertiary);
+}
+
+.skills-legend-chip-active {
+  color: var(--amber-primary);
+}

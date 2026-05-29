@@ -1,0 +1,20 @@
+.section-heading-container {
+  margin-bottom: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-2xs);
+}
+
+.section-accent-line {
+  height: 2px;
+  background: var(--amber-primary);
+  width: 0; /* Animated to 60px */
+  margin-top: var(--space-xs);
+}

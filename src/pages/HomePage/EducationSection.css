@@ -1,0 +1,112 @@
+/* Education Section modular stylesheet */
+.education-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-3xl);
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .education-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
+.education-primary-card {
+  background: rgba(24, 24, 24, 0.6);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border-left: 3px solid var(--amber-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.education-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+  border-bottom: 1px dashed var(--border-default);
+  padding-bottom: var(--space-md);
+}
+
+.education-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.education-degree {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.education-inst {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: var(--space-2xs);
+}
+
+.education-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.education-highlights-list {
+  margin: var(--space-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.education-highlight-item {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.education-secondary-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  justify-content: space-between;
+}
+
+.education-secondary-card {
+  background: rgba(24, 24, 24, 0.5);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  flex: 1;
+}
+
+.education-secondary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.education-secondary-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.education-secondary-school {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: var(--space-2xs);
+}

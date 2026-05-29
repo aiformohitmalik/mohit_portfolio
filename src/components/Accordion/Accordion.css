@@ -1,0 +1,64 @@
+/* Accordion modular stylesheet */
+.accordion-item {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: rgba(24, 24, 24, 0.5);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.accordion-item:hover {
+  border-color: var(--border-hover);
+  background: rgba(24, 24, 24, 0.7);
+}
+
+.accordion-trigger {
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.accordion-trigger:focus-visible {
+  outline: 2px solid var(--amber-primary);
+  outline-offset: -2px;
+}
+
+.accordion-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.accordion-icon-chevron {
+  color: var(--amber-primary);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.accordion-icon-chevron-rotated {
+  transform: rotate(180deg);
+}
+
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1), padding 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  padding: 0 var(--space-lg);
+}
+
+.accordion-panel-expanded {
+  max-height: 500px; /* Safe upper bound for bullet lists */
+  padding-bottom: var(--space-lg);
+}
+
+.accordion-content-inner {
+  border-top: 1px solid var(--border-default);
+  padding-top: var(--space-md);
+}

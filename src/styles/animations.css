@@ -1,0 +1,204 @@
+/* High Fidelity Animation System */
+
+/* 1. Hero H1 Word Reveal */
+@keyframes wordReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.word-reveal-char {
+  display: inline-block;
+  opacity: 0;
+  animation: wordReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 2. Photo Border Trace */
+@keyframes borderTrace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 3. Availability Pulse Dot */
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 0 0 0 rgba(61, 214, 140, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(61, 214, 140, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(61, 214, 140, 0);
+  }
+}
+
+.pulse-dot {
+  animation: pulseGreen 1.8s infinite ease-in-out;
+}
+
+/* 4. Scroll Indicator Bounce */
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.scroll-bounce {
+  animation: scrollBounce 1.5s infinite ease-in-out;
+}
+
+/* 5. Section Heading Line Expansion */
+@keyframes scaleLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60px;
+  }
+}
+
+.scale-line-enter {
+  animation: scaleLine 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 6. Card Fade + Entrance Stagger */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-card {
+  opacity: 0;
+  animation: cardEntrance 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 7. Background Scan-line & Grid Animation */
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+.grid-overlay {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(42, 42, 42, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(42, 42, 42, 0.3) 1px, transparent 1px);
+}
+
+/* 8. Page Transitions (SPA) */
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition-enter {
+  animation: pageEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* 9. Skill Card Border Glow & Shadow pulse */
+.skill-card-hover {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.skill-card-hover:hover {
+  border-color: #444444;
+  box-shadow: 0 0 16px rgba(245, 166, 35, 0.12);
+}
+
+/* 10. CTA Slide Fill Outlined Button */
+.cta-outlined {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.cta-outlined::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--amber-primary);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cta-outlined:hover {
+  color: var(--bg-base);
+  border-color: var(--amber-primary);
+}
+
+.cta-outlined:hover::after {
+  transform: scaleX(1);
+}
+
+/* 11. prefers-reduced-motion Overrides */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .word-reveal-char {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .reveal-card {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .page-transition-enter {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .pulse-dot {
+    animation: none !important;
+    box-shadow: none !important;
+  }
+
+  .scroll-bounce {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .scale-line-enter {
+    width: 60px !important;
+    animation: none !important;
+  }
+}

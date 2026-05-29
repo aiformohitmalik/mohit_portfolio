@@ -1,0 +1,62 @@
+/* iConnect sub-page modular stylesheet */
+.iconnect-hero-quote {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 4vw, 36px);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+  max-width: 900px;
+  border-left: 3px solid var(--amber-primary);
+  padding-left: var(--space-lg);
+  margin: var(--space-xl) 0;
+}
+
+.iconnect-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: var(--space-xl);
+}
+
+@media (max-width: 768px) {
+  .iconnect-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .iconnect-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.iconnect-stat-card {
+  background: var(--bg-surface);
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+}
+
+.iconnect-stat-val {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--amber-primary);
+}
+
+.iconnect-stat-lbl {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  margin-top: var(--space-2xs);
+}
+
+.iconnect-stat-sub {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
