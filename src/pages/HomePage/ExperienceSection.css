@@ -1,0 +1,6 @@
+/* Experience Section modular stylesheet */
+.experience-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}

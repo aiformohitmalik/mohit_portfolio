@@ -1,0 +1,142 @@
+/* Hero Section modular stylesheet */
+.hero-wrapper {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 80px; /* Offset for navbar */
+  background: radial-gradient(circle at 20% 30%, #1A1200 0%, #0A0A0A 70%);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: var(--space-3xl);
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    text-align: center;
+    padding-top: var(--space-md);
+  }
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+  .hero-left {
+    align-items: center;
+  }
+}
+
+.hero-label {
+  margin-bottom: var(--space-sm);
+}
+
+.hero-title {
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+
+.hero-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-2xl);
+}
+
+@media (max-width: 900px) {
+  .hero-chips-row {
+    justify-content: center;
+  }
+}
+
+.hero-chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-default);
+  padding: 4px var(--space-sm);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+@media (max-width: 600px) {
+  .hero-ctas {
+    width: 100%;
+    flex-direction: column;
+  }
+  .hero-ctas a, .hero-ctas button {
+    width: 100%;
+  }
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Availability Status blip beneath photo */
+.hero-status-row {
+  margin-top: var(--space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+}
+
+.status-blip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-primary);
+  display: inline-block;
+}
+
+/* Scroll down bounce arrow indicator at the bottom of hero */
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.hero-scroll-indicator svg {
+  color: var(--amber-primary);
+}

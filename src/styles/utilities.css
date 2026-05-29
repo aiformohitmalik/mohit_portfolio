@@ -1,0 +1,158 @@
+/* Utility helper classes */
+
+/* 1. Industrial Glass Panels */
+.glass-panel {
+  background: rgba(24, 24, 24, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-default);
+}
+
+.glass-panel-elevated {
+  background: rgba(34, 34, 34, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-hover);
+}
+
+/* 2. Interactive Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 0 var(--space-lg);
+  height: 48px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-primary {
+  background: var(--amber-primary);
+  color: var(--bg-base);
+  border: 1px solid var(--amber-primary);
+}
+
+.btn-primary:hover {
+  background: var(--amber-hover);
+  border-color: var(--amber-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border-default);
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* 3. Skill & Detail Badges */
+.badge-solid {
+  display: inline-block;
+  padding: var(--space-2xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.badge-amber {
+  background: var(--amber-wash);
+  color: var(--amber-primary);
+  border: 1px solid var(--amber-dim);
+}
+
+.badge-blue {
+  background: var(--blue-wash);
+  color: var(--blue-primary);
+  border: 1px solid var(--blue-dim);
+}
+
+.badge-green {
+  background: var(--green-wash);
+  color: var(--green-primary);
+  border: 1px solid var(--green-dim);
+}
+
+.badge-purple {
+  background: var(--purple-wash);
+  color: var(--purple-primary);
+  border: 1px solid var(--purple-dim);
+}
+
+.badge-gray {
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+/* 4. Custom Focus Rings */
+:focus-visible {
+  outline: 2px solid var(--amber-primary);
+  outline-offset: 4px;
+}
+
+/* 5. General Helpers */
+.hidden {
+  display: none !important;
+}
+
+.no-overflow {
+  overflow: hidden;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* 6. High-Affordance Interactive Redirect CTA */
+.redirect-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(245, 166, 35, 0.02);
+  border: 1px solid rgba(245, 166, 35, 0.15);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--amber-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+.redirect-cta-btn:hover {
+  background: var(--amber-wash);
+  border-color: var(--amber-primary);
+  box-shadow: 0 0 12px rgba(245, 166, 35, 0.15);
+  color: var(--text-primary);
+}
+
+.redirect-cta-btn svg {
+  transition: transform 0.2s ease;
+  color: var(--amber-primary);
+}
+
+.redirect-cta-btn:hover svg {
+  transform: translateX(4px);
+  color: var(--text-primary);
+}
+

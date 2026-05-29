@@ -1,0 +1,62 @@
+/* Campus sub-page modular stylesheet */
+.campus-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+}
+
+@media (max-width: 900px) {
+  .campus-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.campus-achievement-card {
+  background: rgba(24, 24, 24, 0.6);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease;
+}
+
+.campus-achievement-card:hover {
+  border-color: var(--border-hover);
+}
+
+.campus-achievement-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  border-bottom: 1px dashed var(--border-default);
+  padding-bottom: var(--space-sm);
+}
+
+.campus-achievement-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--green-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.campus-achievement-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.campus-achievement-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
