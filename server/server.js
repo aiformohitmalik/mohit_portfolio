@@ -544,21 +544,33 @@ const startServer = async () => {
 };
 
 // Handle clean database termination on runtime environment terminations
-const shutdown = () => {
-  console.log('⚠️  Received shutdown signal, cleaning up resources...');
-  mongoose.connection.close(() => {
+// const shutdown = () => {
+//   console.log('⚠️  Received shutdown signal, cleaning up resources...');
+//   mongoose.connection.close(() => {
+//     console.log('Mongoose default connection disconnected.');
+//     process.exit(0);
+//   });
+// };
+
+// process.on('SIGTERM', shutdown);
+// process.on('SIGINT', shutdown);
+
+// // Handle uncaught exceptions
+// process.on('uncaughtException', (err) => {
+//   console.error('❌ Uncaught Exception:', err);
+//   process.exit(1);
+// });
+// Update your shutdown block to this:
+const shutdown = async () => {
+  console.log('⚠️ Received shutdown signal, cleaning up resources...');
+  try {
+    await mongoose.connection.close();
     console.log('Mongoose default connection disconnected.');
     process.exit(0);
-  });
+  } catch (err) {
+    console.error('Error during database disconnection:', err);
+    process.exit(1);
+  }
 };
-
-process.on('SIGTERM', shutdown);
-process.on('SIGINT', shutdown);
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('❌ Uncaught Exception:', err);
-  process.exit(1);
-});
 
 startServer();
