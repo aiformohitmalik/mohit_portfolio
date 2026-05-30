@@ -7,5 +7,41 @@
     "purpose": "Recruitment",
     "message": "Hello Mohit, we would like to interview you for a Physical AI Robotics position.",
     "createdAt": "2026-05-29T16:43:46.658Z"
+  },
+  {
+    "id": "1780127385213",
+    "name": "Mohit Malik",
+    "email": "aiformohitmalik@gmail.com",
+    "organization": "edag",
+    "purpose": "General Inquiry",
+    "message": "hii",
+    "createdAt": "2026-05-30T07:49:45.214Z"
+  },
+  {
+    "id": "1780127610275",
+    "name": "Mohit Malik",
+    "email": "aiformohitmalik@gmail.com",
+    "organization": "edag",
+    "purpose": "General Inquiry",
+    "message": "bhh",
+    "createdAt": "2026-05-30T07:53:30.275Z"
+  },
+  {
+    "id": "1780127636278",
+    "name": "Mohit Malik",
+    "email": "aiformohitmalik@gmail.com",
+    "organization": "edag",
+    "purpose": "Recruitment",
+    "message": "ggy",
+    "createdAt": "2026-05-30T07:53:56.278Z"
+  },
+  {
+    "id": "1780129269502",
+    "name": "Mohit Malik",
+    "email": "aiformohitmalik@gmail.com",
+    "organization": "edag",
+    "purpose": "General Inquiry",
+    "message": "hii",
+    "createdAt": "2026-05-30T08:21:09.502Z"
   }
 ]

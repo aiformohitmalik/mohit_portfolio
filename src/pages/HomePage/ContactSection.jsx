@@ -39,14 +39,21 @@ export const ContactSection = () => {
     setErrorMessage('');
 
     try {
-      // Connect to local MERN server endpoint
-      const response = await fetch('http://localhost:5000/api/inquiries', {
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiBaseUrl}/api/inquiries`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Aligns with backend cors configuration
         body: JSON.stringify(formData),
       });
+
+      // Safely check if the response is valid JSON before parsing
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server returned an invalid non-JSON response.');
+      }
 
       const data = await response.json();
 
@@ -67,7 +74,13 @@ export const ContactSection = () => {
     } catch (error) {
       console.error('Form submission error:', error);
       setStatus('error');
-      setErrorMessage('Could not connect to the backend server. Please make sure the backend is running.');
+      
+      // Informative user feedback based on the error type
+      if (error.message === 'Server returned an invalid non-JSON response.') {
+        setErrorMessage('The server encountered an error processing this request. Please try again later.');
+      } else {
+        setErrorMessage('Could not connect to the backend server. Please make sure the backend is running.');
+      }
     }
   };
 
