@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { navLinks } from '../../data/navigation';
 import { personalData } from '../../data/personal';
@@ -60,9 +61,24 @@ export const Navbar = ({ currentRoute, onNavigate }) => {
 
       <nav className={`navbar-wrapper ${isScrolled ? 'navbar-scrolled' : ''}`}>
         <div className="container navbar-container">
-          {/* Logo */}
-          <div className="logo" onClick={() => { onNavigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-            MOHIT
+          {/* Logo & Navigation Path */}
+          <div className="logo-group">
+            <div className="logo" onClick={() => { onNavigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+              MOHIT
+            </div>
+            {currentRoute !== '/' && (
+              <>
+                <div className="nav-divider" />
+                <button 
+                  className="nav-back-btn" 
+                  onClick={() => onNavigate('/')}
+                  aria-label="Back to Home"
+                >
+                  <ArrowLeft size={14} />
+                  <span>BACK TO HOME</span>
+                </button>
+              </>
+            )}
           </div>
 
           {/* Desktop Nav Links */}

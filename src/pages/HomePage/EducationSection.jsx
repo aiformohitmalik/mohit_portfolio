@@ -41,7 +41,7 @@ export const EducationSection = ({ onNavigate }) => {
           <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'flex-start' }}>
             <span 
               onClick={() => onNavigate(primary.campusLink)}
-              className="entity-link-action"
+              className="redirect-cta-btn"
               style={{ cursor: 'pointer' }}
             >
               <span>Campus Story: NCC · Karate · Student of the Year</span>

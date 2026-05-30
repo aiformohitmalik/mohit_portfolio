@@ -15,22 +15,6 @@ export const PageLayout = ({ children, title, onBack }) => {
 
   return (
     <div className="pagelayout-wrapper page-transition-enter">
-      {/* Sticky header with back button */}
-      <header className="pagelayout-header">
-        <div className="container" style={{ display: 'flex', alignItems: 'center' }}>
-          <div 
-            className="pagelayout-back-btn" 
-            onClick={onBack}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && onBack()}
-          >
-            <ArrowLeft size={16} />
-            <span>BACK TO HOME</span>
-          </div>
-        </div>
-      </header>
-
       {/* Main sub page content */}
       <main className="pagelayout-content">
         {children}

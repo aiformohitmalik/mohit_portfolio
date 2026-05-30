@@ -5,13 +5,16 @@ import mongoose from 'mongoose';
 import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { spawn } from 'child_process';
 import { Inquiry } from './models/Inquiry.js';
 
-// Setup environment variables
-dotenv.config();
-
+// Setup file paths first
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// Setup environment variables with explicit path
+dotenv.config({ path: join(__dirname, '.env') });
+
 const DATA_DIR = join(__dirname, 'data');
 const DATA_FILE = join(DATA_DIR, 'inquiries.json');
 
@@ -23,6 +26,25 @@ app.use(cors({
   origin: '*', // Allows all origins for local testing and deployment
 }));
 app.use(express.json());
+
+// Serve static files from dist folder (for production builds)
+const distPath = join(__dirname, '../dist');
+app.use(express.static(distPath));
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    message: '👋 Welcome to Mohit\'s Portfolio Server',
+    status: 'online',
+    endpoints: {
+      health: '/api/health',
+      inquiries: {
+        get: 'GET /api/inquiries',
+        post: 'POST /api/inquiries'
+      }
+    }
+  });
+});
 
 // State variables
 let isMongoConnected = false;
@@ -172,8 +194,108 @@ app.get('/api/inquiries', async (req, res) => {
   }
 });
 
-// Start the server
-app.listen(PORT, async () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  await connectDB();
+// SPA fallback - serve index.html for unmatched routes (for React Router)
+app.use((req, res) => {
+  const indexPath = join(distPath, 'index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      // If index.html doesn't exist (development), send a simple 404
+      res.status(404).json({
+        error: 'Not Found',
+        message: 'The requested resource was not found',
+        path: req.path
+      });
+    }
+  });
 });
+
+const startServer = async () => {
+  try {
+    const server = app.listen(PORT, async () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      await connectDB();
+      
+      // Start ngrok tunnel for public exposure
+      startNgrokTunnel();
+    });
+  } catch (error) {
+    console.error('❌ Server startup failed:', error);
+    process.exit(1);
+  }
+};
+
+// Global variable to store ngrok process
+let ngrokProcess = null;
+
+// Function to start ngrok tunnel via CLI
+const startNgrokTunnel = () => {
+  try {
+    // Kill existing ngrok process if any
+    if (ngrokProcess) {
+      ngrokProcess.kill();
+    }
+    
+    const ngrok = spawn('ngrok', ['http', PORT.toString(), '--log=stdout']);
+    ngrokProcess = ngrok;
+    let urlDisplayed = false;
+    
+    ngrok.stdout.on('data', (data) => {
+      const output = data.toString();
+      
+      // Look for the public URL in ngrok output
+      const urlMatch = output.match(/url=(https:\/\/[a-z0-9-]+\.ngrok(?:-free)?\.dev)/i);
+      if (urlMatch && !urlDisplayed) {
+        const publicUrl = urlMatch[1];
+        console.log('\n✨ Public URL (via ngrok):');
+        console.log(`   ${publicUrl}`);
+        console.log('\n🔗 Your server is now publicly accessible!\n');
+        urlDisplayed = true;
+      }
+    });
+    
+    ngrok.stderr.on('data', (data) => {
+      const error = data.toString();
+      if (error.toLowerCase().includes('error') && !error.includes('deprecated')) {
+        console.error('⚠️  ngrok error:', error.trim());
+      }
+    });
+    
+    ngrok.on('close', (code) => {
+      if (code !== 0 && code !== null) {
+        console.log('\n⚠️  ngrok tunnel closed');
+      }
+    });
+    
+  } catch (err) {
+    console.error('❌ Failed to start ngrok tunnel:', err.message);
+    console.log('💡 Make sure ngrok is installed: https://ngrok.com/download\n');
+  }
+};
+
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('⚠️  Received SIGTERM, cleaning up...');
+  if (ngrokProcess) {
+    ngrokProcess.kill();
+  }
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  console.log('⚠️  Received SIGINT, cleaning up...');
+  if (ngrokProcess) {
+    ngrokProcess.kill();
+  }
+  // Don't exit here, let the server continue
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('❌ Uncaught Exception:', err);
+  if (ngrokProcess) {
+    ngrokProcess.kill();
+  }
+  process.exit(1);
+});
+
+startServer();

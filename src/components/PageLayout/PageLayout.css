@@ -9,42 +9,9 @@
   overflow: hidden;
 }
 
-.pagelayout-header {
-  height: 64px;
-  border-bottom: 1px solid var(--border-default);
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  background: rgba(10, 10, 10, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: var(--z-navbar);
-}
-
-.pagelayout-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--amber-primary);
-  cursor: pointer;
-  padding: var(--space-xs) var(--space-md);
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-}
-
-.pagelayout-back-btn:hover {
-  border-color: var(--border-default);
-  background: rgba(255, 255, 255, 0.02);
-}
-
 .pagelayout-content {
   flex: 1;
-  padding-top: var(--space-2xl);
+  padding-top: clamp(80px, 10vh, 120px);
   padding-bottom: var(--space-4xl);
 }
 

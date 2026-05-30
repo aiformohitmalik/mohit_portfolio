@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import { SectionHeading } from '../../components/SectionHeading/SectionHeading';
 import { SkillDomainCard } from '../../components/SkillDomainCard/SkillDomainCard';
 import { skillsData, skillLegend } from '../../data/skills';
@@ -39,10 +40,11 @@ export const SkillsSection = ({ onNavigate }) => {
 
         <span 
           onClick={() => onNavigate('/internships')}
-          className="entity-link-action"
-          style={{ cursor: 'pointer', fontSize: '13px' }}
+          className="redirect-cta-btn"
+          style={{ cursor: 'pointer' }}
         >
           <span>See Full Certifications & Learning Path</span>
+          <ArrowRight size={14} />
         </span>
       </div>
     </section>

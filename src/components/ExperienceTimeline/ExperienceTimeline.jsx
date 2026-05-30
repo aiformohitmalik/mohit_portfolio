@@ -92,7 +92,7 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
               <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end' }}>
                 <span 
                   onClick={() => onNavigate(edag.deepDiveUrl)}
-                  className="entity-link-action"
+                  className="redirect-cta-btn"
                   style={{ cursor: 'pointer' }}
                 >
                   <span>EDAG Deep-Dive</span>
@@ -143,7 +143,7 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
               <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end' }}>
                 <span 
                   onClick={() => onNavigate(startup.deepDiveUrl)}
-                  className="entity-link-action"
+                  className="redirect-cta-btn"
                   style={{ cursor: 'pointer' }}
                 >
                   <span>The Founder Years</span>
@@ -188,7 +188,7 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
             <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-end' }}>
               <span 
                 onClick={() => onNavigate('#/internships')}
-                className="entity-link-action"
+                className="redirect-cta-btn"
                 style={{ cursor: 'pointer' }}
               >
                 <span>View Full Details & Learning Path</span>

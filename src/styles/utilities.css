@@ -117,3 +117,42 @@
 .w-full {
   width: 100%;
 }
+
+/* 6. High-Affordance Interactive Redirect CTA */
+.redirect-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: rgba(245, 166, 35, 0.02);
+  border: 1px solid rgba(245, 166, 35, 0.15);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--amber-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+.redirect-cta-btn:hover {
+  background: var(--amber-wash);
+  border-color: var(--amber-primary);
+  box-shadow: 0 0 12px rgba(245, 166, 35, 0.15);
+  color: var(--text-primary);
+}
+
+.redirect-cta-btn svg {
+  transition: transform 0.2s ease;
+  color: var(--amber-primary);
+}
+
+.redirect-cta-btn:hover svg {
+  transform: translateX(4px);
+  color: var(--text-primary);
+}
+
