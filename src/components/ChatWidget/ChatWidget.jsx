@@ -3,6 +3,55 @@ import './ChatWidget.css';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
+// Simple markdown formatter to structure bullet lists, bold text, and paragraphs
+const renderMarkdown = (text) => {
+  if (!text) return '';
+  const lines = text.split('\n');
+  const elements = [];
+  let currentList = [];
+
+  lines.forEach((line, idx) => {
+    const trimmed = line.trim();
+    
+    // Parse bold text: **bold** -> <strong>bold</strong>
+    const parseBold = (str) => {
+      const parts = str.split('**');
+      return parts.map((part, i) => (i % 2 === 1 ? <strong key={i}>{part}</strong> : part));
+    };
+
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      const bulletContent = trimmed.slice(2);
+      currentList.push(
+        <li key={`li-${idx}`} style={{ marginLeft: '18px', listStyleType: 'disc', marginBottom: '6px', lineHeight: '1.4' }}>
+          {parseBold(bulletContent)}
+        </li>
+      );
+    } else {
+      // If we were building a list, push it to elements first
+      if (currentList.length > 0) {
+        elements.push(<ul key={`ul-${idx}`} style={{ margin: '0 0 10px 0', padding: 0 }}>{currentList}</ul>);
+        currentList = [];
+      }
+
+      if (trimmed === '') {
+        elements.push(<div key={`gap-${idx}`} style={{ height: '8px' }} />);
+      } else {
+        elements.push(
+          <p key={`p-${idx}`} style={{ margin: '0 0 10px 0', lineHeight: '1.5' }}>
+            {parseBold(trimmed)}
+          </p>
+        );
+      }
+    }
+  });
+
+  if (currentList.length > 0) {
+    elements.push(<ul key="ul-final" style={{ margin: '0 0 10px 0', padding: 0 }}>{currentList}</ul>);
+  }
+
+  return elements;
+};
+
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -11,6 +60,7 @@ export const ChatWidget = () => {
   const [backendStatus, setBackendStatus] = useState('connecting');
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const typewriterRef = useRef(null);
 
   // Check backend health on mount
   useEffect(() => {
@@ -18,6 +68,15 @@ export const ChatWidget = () => {
       .then((res) => res.json())
       .then(() => setBackendStatus('online'))
       .catch(() => setBackendStatus('offline'));
+  }, []);
+
+  // Cleanup typewriter interval on unmount
+  useEffect(() => {
+    return () => {
+      if (typewriterRef.current) {
+        clearInterval(typewriterRef.current);
+      }
+    };
   }, []);
 
   // Scroll to bottom when new messages arrive
@@ -47,6 +106,11 @@ export const ChatWidget = () => {
     const trimmed = input.trim();
     if (!trimmed || isLoading) return;
 
+    // Clear any active typewriter animations first
+    if (typewriterRef.current) {
+      clearInterval(typewriterRef.current);
+    }
+
     const userMessage = { role: 'user', content: trimmed, timestamp: new Date() };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
@@ -59,28 +123,107 @@ export const ChatWidget = () => {
         body: JSON.stringify({ message: trimmed }),
       });
 
-      const data = await res.json();
+      if (!res.ok) {
+        throw new Error('Server responded with an error status.');
+      }
 
-      if (res.ok && data.success) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: data.response,
-            provider: data.provider,
-            timestamp: new Date(),
-          },
-        ]);
-      } else {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: data.error || 'Something went wrong. Please try again.',
-            isError: true,
-            timestamp: new Date(),
-          },
-        ]);
+      // Add a placeholder assistant message that we'll type into
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: '',
+          timestamp: new Date(),
+        },
+      ]);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      let buffer = '';
+
+      // Typewriter control states
+      let textQueue = '';
+      let typedText = '';
+      let streamFinished = false;
+
+      // Start the typewriter typing loop (20ms interval is comfortable and premium)
+      typewriterRef.current = setInterval(() => {
+        if (textQueue.length > 0) {
+          // Adaptive speed: if the queue gets backed up (fast stream), type faster (batch of 3 chars) to stay caught up
+          const batchSize = textQueue.length > 80 ? 3 : 1;
+          const charsToType = textQueue.substring(0, batchSize);
+          textQueue = textQueue.substring(batchSize);
+          typedText += charsToType;
+
+          setMessages((prev) => {
+            const next = [...prev];
+            if (next.length > 0) {
+              next[next.length - 1] = {
+                ...next[next.length - 1],
+                content: typedText,
+              };
+            }
+            return next;
+          });
+        } else if (streamFinished) {
+          clearInterval(typewriterRef.current);
+          typewriterRef.current = null;
+        }
+      }, 20);
+
+      while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        done = readerDone;
+        if (value) {
+          buffer += decoder.decode(value, { stream: !done });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmedLine = line.trim();
+            if (trimmedLine.startsWith('data: ')) {
+              const dataStr = trimmedLine.slice(6).trim();
+              if (dataStr) {
+                try {
+                  const data = JSON.parse(dataStr);
+                  if (data.error) {
+                    streamFinished = true;
+                    setMessages((prev) => {
+                      const next = [...prev];
+                      if (next.length > 0) {
+                        next[next.length - 1] = {
+                          ...next[next.length - 1],
+                          content: data.error,
+                          isError: true,
+                        };
+                      }
+                      return next;
+                    });
+                  } else if (data.chunk) {
+                    // Push incoming text to the queue
+                    textQueue += data.chunk;
+                  } else if (data.done) {
+                    streamFinished = true;
+                    // Add metadata once streaming is fully done
+                    setMessages((prev) => {
+                      const next = [...prev];
+                      if (next.length > 0) {
+                        next[next.length - 1] = {
+                          ...next[next.length - 1],
+                          provider: data.provider,
+                        };
+                      }
+                      return next;
+                    });
+                  }
+                } catch (e) {
+                  buffer = line + '\n' + buffer;
+                }
+              }
+            }
+          }
+        }
       }
     } catch (err) {
       setMessages((prev) => [
@@ -171,7 +314,7 @@ export const ChatWidget = () => {
         {messages.map((msg, i) => (
           <div key={i} className={`chat-message ${msg.role}`}>
             <div className={`chat-message-bubble ${msg.isError ? 'chat-error-bubble' : ''}`}>
-              {msg.content}
+              {msg.role === 'assistant' && !msg.isError ? renderMarkdown(msg.content) : msg.content}
             </div>
             <div className="chat-message-meta">
               <span>{formatTime(msg.timestamp)}</span>

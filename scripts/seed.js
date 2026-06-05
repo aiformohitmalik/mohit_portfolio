@@ -50,12 +50,12 @@ async function seed() {
     level: 1,
     category: 'profile',
     summary:
-      'Mohit Malik is a Physical AI Engineer and Robotic Simulation Engineer with 2+ years at EDAG PS India specializing in BIW plant simulations, digital twin development using NVIDIA Omniverse (OpenUSD), and robotic OLP using Siemens Process Simulate. He is also the Founder and Ex-CTO of Ground Rebotics Pvt. Ltd., a deep-tech startup incubated at AIC IIT Delhi that raised ₹16 Lakhs in government funding. He holds a B.Tech in Mechanical Engineering with University Gold Medal from GJUS&T Hisar. He is currently based in Gurgaon/Rohtak, Haryana, India.',
+      'Mohit Malik is a Physical AI Engineer and Robotic Simulation Engineer with 2+ years at EDAG PS India specializing in BIW plant simulations, digital twin development using NVIDIA Omniverse (OpenUSD), and robotic OLP using Siemens Process Simulate. He is also the Founder and Ex-CTO of Ground Rebotics Pvt. Ltd. (incubated at AIC IIT Delhi, raised ₹16 Lakhs in government funding). He holds a B.Tech in Mechanical Engineering (University Gold Medal) from GJUS&T Hisar. Contact Info: Email: mohitkumarmalik100@gmail.com, Phone: +91 92534 67437, LinkedIn: linkedin.com/in/mohit--malik. Location: Rohtak/Gurgaon, Haryana, India.',
     keywords: [
       'Mohit Malik', 'Physical AI', 'robotic simulation', 'digital twin',
       'NVIDIA Omniverse', 'OpenUSD', 'Siemens Process Simulate', 'BIW',
       'EDAG', 'Ground Rebotics', 'startup', 'IIT Delhi', 'gold medal',
-      'mechanical engineering', 'OLP', 'Gaussian Splatting',
+      'mechanical engineering', 'OLP', 'Gaussian Splatting', 'email', 'phone', 'linkedin', 'contact',
     ],
   });
   console.log(`   ✅ Profile created: ${profile._id}`);

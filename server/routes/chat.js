@@ -55,18 +55,22 @@ setInterval(() => {
 }, 5 * 60 * 1000);
 
 // ── System Prompt ───────────────────────────────────────────────────────────
-const SYSTEM_PROMPT_TEMPLATE = `You are "Mannu" — Mohit's AI assistant on his portfolio website.
+const SYSTEM_PROMPT_TEMPLATE = `You are "Mannu" — Mohit's professional AI assistant on his portfolio website.
 Answer only about Mohit's professional background, skills, and experience.
 Base answers strictly on the provided context. Do not invent details.
 If the context lacks the answer, say: "I don't have that detail — reach out to Mohit directly via the contact form."
 Redirect unrelated questions politely back to Mohit's career.
-Keep answers under 4 sentences. Be technically precise and confident.
+
+WRITING STYLE GUIDELINES:
+- Format your response professionally using markdown: use bold keywords, list items, and clear spacing.
+- NEVER return a single solid block ("brick") of text. Break details down into logical, easy-to-read segments.
+- Keep answers concise (under 4-5 sentences or a short bulleted list), polished, and precise.
 
 CONTEXT:
 {context}`;
 
 // ── Dual-Provider LLM Call ──────────────────────────────────────────────────
-async function generateResponse(systemPrompt, userMessage) {
+async function generateResponse(systemPrompt, userMessage, onChunk) {
   const groqClient = getGroq();
   const geminiClient = getGemini();
 
@@ -81,9 +85,19 @@ async function generateResponse(systemPrompt, userMessage) {
         ],
         temperature: 0.25,
         max_tokens: 512,
+        stream: true,
       });
+
+      let fullText = '';
+      for await (const chunk of groqResponse) {
+        const content = chunk.choices[0]?.delta?.content || '';
+        if (content) {
+          fullText += content;
+          onChunk(content);
+        }
+      }
       return {
-        text: groqResponse.choices[0].message.content,
+        text: fullText,
         provider: 'groq',
       };
     } catch (groqError) {
@@ -94,7 +108,7 @@ async function generateResponse(systemPrompt, userMessage) {
   // FALLBACK: Gemini 2.5 Flash (~1-2s, 15 RPM)
   if (geminiClient) {
     try {
-      const geminiResponse = await geminiClient.models.generateContent({
+      const geminiResponse = await geminiClient.models.generateContentStream({
         model: 'gemini-2.5-flash',
         contents: userMessage,
         config: {
@@ -102,8 +116,17 @@ async function generateResponse(systemPrompt, userMessage) {
           temperature: 0.25,
         },
       });
+
+      let fullText = '';
+      for await (const chunk of geminiResponse) {
+        const content = chunk.text;
+        if (content) {
+          fullText += content;
+          onChunk(content);
+        }
+      }
       return {
-        text: geminiResponse.text,
+        text: fullText,
         provider: 'gemini',
       };
     } catch (geminiError) {
@@ -201,20 +224,31 @@ export async function chatHandler(req, res) {
 
     const systemPrompt = SYSTEM_PROMPT_TEMPLATE.replace('{context}', assembledContext);
 
-    // ── Generate LLM response ───────────────────────────────────────────
-    const result = await generateResponse(systemPrompt, userMessage);
+    // Set response headers for event-streaming (SSE)
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders(); // Ensure headers are flushed immediately to open connection
 
-    return res.json({
-      success: true,
-      response: result.text,
-      provider: result.provider,
+    // ── Generate LLM response with streaming ────────────────────────────
+    const result = await generateResponse(systemPrompt, userMessage, (chunk) => {
+      res.write(`data: ${JSON.stringify({ chunk })}\n\n`);
     });
+
+    // Send final packet to client
+    res.write(`data: ${JSON.stringify({ done: true, provider: result.provider })}\n\n`);
+    res.end();
   } catch (error) {
     console.error('❌ Chat handler error:', error);
-    return res.status(500).json({
-      success: false,
-      error: "Mannu ran into an issue processing your question. Please try again in a moment.",
-    });
+    if (res.headersSent) {
+      res.write(`data: ${JSON.stringify({ error: "Mannu ran into an issue processing your question. Please try again in a moment." })}\n\n`);
+      res.end();
+    } else {
+      return res.status(500).json({
+        success: false,
+        error: "Mannu ran into an issue processing your question. Please try again in a moment.",
+      });
+    }
   }
 }
 
