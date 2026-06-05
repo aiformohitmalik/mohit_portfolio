@@ -309,6 +309,7 @@ import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { Inquiry } from './models/Inquiry.js';
+import { chatHandler } from './routes/chat.js';
 
 // Setup file paths first
 const __filename = fileURLToPath(import.meta.url);
@@ -442,6 +443,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Mannu AI chatbot endpoint (hierarchical RAG + dual LLM)
+app.post('/api/chat', chatHandler);
+
 // POST /api/inquiries - Submit an inquiry
 app.post('/api/inquiries', async (req, res) => {
   const { name, email, organization, purpose, message } = req.body;
@@ -536,6 +540,7 @@ const startServer = async () => {
     await connectDB();
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`🤖 Mannu AI: Groq ${process.env.GROQ_API_KEY ? '✅' : '❌'}  Gemini ${process.env.GEMINI_API_KEY ? '✅' : '❌'}`);
     });
   } catch (error) {
     console.error('❌ Server startup failed:', error);

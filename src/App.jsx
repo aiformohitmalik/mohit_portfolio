@@ -6,6 +6,7 @@ import { IConnectPage } from './pages/IConnectPage/IConnectPage';
 import { CampusPage } from './pages/CampusPage/CampusPage';
 import { InternshipsPage } from './pages/InternshipsPage/InternshipsPage';
 import { EdagPage } from './pages/EdagPage/EdagPage';
+import { ChatWidget } from './components/ChatWidget/ChatWidget';
 
 // Import CSS Design System
 import './styles/tokens.css';
@@ -42,6 +43,12 @@ export const App = () => {
     return () => {
       window.removeEventListener('popstate', parseRouteFromLocation);
     };
+  }, []);
+
+  // Pre-warm Render backend on page load (fire-and-forget)
+  useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+    fetch(`${apiUrl}/api/health`).catch(() => {}); // Silent pre-warm
   }, []);
 
   useLayoutEffect(() => {
@@ -115,6 +122,7 @@ export const App = () => {
       <div className="main-content-wrapper">
         {renderCurrentPage()}
       </div>
+      <ChatWidget />
     </>
   );
 };
