@@ -187,7 +187,7 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
             {/* View Full details action */}
             <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-end' }}>
               <span 
-                onClick={() => onNavigate('#/internships')}
+                onClick={() => onNavigate('/internships')}
                 className="redirect-cta-btn"
                 style={{ cursor: 'pointer' }}
               >

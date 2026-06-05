@@ -7,7 +7,7 @@ export const experienceData = [
     logoText: "EDAG",
     duration: "06/2024 – Present",
     isPrimary: true,
-    deepDiveUrl: "#/edag",
+    deepDiveUrl: "/edag",
     phases: [
       {
         title: "Digital Twin & Omniverse Development",
@@ -41,7 +41,7 @@ export const experienceData = [
     logoText: "GR",
     duration: "01/2021 – 06/2024",
     isPrimary: true,
-    deepDiveUrl: "#/ground-rebotics",
+    deepDiveUrl: "/ground-rebotics",
     fundingBadge: "₹16L Funded",
     incubationBadge: "AIC IIT Delhi",
     summary: "Built a deep-tech startup in smart agriculture and IoT from a university research lab, scaling it into incubation at AIC IIT Delhi. Led cross-functional teams, secured government funding, and pitched on national stages.",

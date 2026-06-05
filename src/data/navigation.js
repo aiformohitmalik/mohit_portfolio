@@ -1,6 +1,6 @@
 export const navLinks = [
-  { label: "Work", path: "work", isSection: true },
   { label: "About", path: "about", isSection: true },
+  { label: "Work", path: "work", isSection: true },
   { label: "Skills", path: "skills", isSection: true },
   { label: "Education", path: "education", isSection: true },
   { label: "Contact", path: "contact", isSection: true }
@@ -32,7 +32,7 @@ export const entityRoutes = [
     desc: "Specialized engineering training courses and certifications"
   },
   {
-    path: "/edag",
+    path: "/edag-india",
     label: "BIW to Omniverse",
     key: "edag",
     desc: "Detailed mechanical to digital-twin engineering phases"

@@ -10,7 +10,7 @@ export const educationData = {
       "🏆 First student in the Mechanical Department to achieve B.Tech. Honours degree"
     ],
     note: "Awarded B.Tech. Hons. for high academic standing and additional advanced curriculum requirements, graduating top of the department.",
-    campusLink: "#/campus"
+    campusLink: "/campus"
   },
   secondary: [
     {

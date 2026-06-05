@@ -1,2 +1,6 @@
 node_modules
 server/.env
+.gitnexus
+/.claude
+AGENTS.md
+CLAUDE.md
