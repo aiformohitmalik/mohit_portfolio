@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { Inquiry } from './models/Inquiry.js';
 import { chatHandler } from './routes/chat.js';
+import { sendInquiryEmail } from './utils/mailer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -162,6 +163,8 @@ app.post('/api/inquiries', async (req, res) => {
       savedInquiry = await saveToLocalJson({ name, email, organization, purpose, message });
       console.log(`💾 Saved inquiry from ${name} to local JSON.`);
     }
+    sendInquiryEmail({ name, email, organization, purpose, message })
+      .catch(err => console.error('Email notification failed:', err.message));
     res.status(201).json({
       success: true,
       message: 'Inquiry received successfully. Connection established.',
