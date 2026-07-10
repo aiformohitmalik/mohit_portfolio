@@ -1,22 +1,12 @@
-import nodemailer from 'nodemailer';
-
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-  tls: { rejectUnauthorized: false },
-});
+import { Resend } from 'resend';
 
 export async function sendInquiryEmail({ name, email, organization, purpose, message }) {
-  if (!process.env.MAIL_USER || !process.env.MAIL_PASS) return;
+  if (!process.env.RESEND_API_KEY) return;
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
-  await transporter.sendMail({
-    from: `"Portfolio Bot" <${process.env.MAIL_USER}>`,
-    to: process.env.MAIL_TO || process.env.MAIL_USER,
+  await resend.emails.send({
+    from: `Portfolio Bot <${process.env.MAIL_FROM}>`,
+    to: process.env.MAIL_TO,
     subject: `[Portfolio] New ${purpose} inquiry from ${name}`,
     text: [
       `Name:         ${name}`,
