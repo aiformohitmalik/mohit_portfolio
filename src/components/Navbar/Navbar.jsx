@@ -8,7 +8,9 @@ import './Navbar.css';
 export const Navbar = ({ currentRoute, onNavigate }) => {
   const { scrollY, scrollPercent } = useScrollPosition();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const bgOpacity = Math.min(0.95, 0.08 + (scrollY / 160) * 0.87);
   const isScrolled = scrollY > 50;
+  const navBg = `linear-gradient(to bottom, rgba(10,10,10,${bgOpacity.toFixed(3)}) 0%, rgba(10,10,10,${bgOpacity.toFixed(3)}) 70%, rgba(10,10,10,0) 100%)`;
   const pendingSectionRef = useRef(null);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
@@ -67,7 +69,10 @@ export const Navbar = ({ currentRoute, onNavigate }) => {
     <>
       <div className="scroll-progress-bar" style={{ width: `${progressWidth}%` }} />
 
-      <nav className={`navbar-wrapper ${isScrolled ? 'navbar-scrolled' : ''}`}>
+      <nav
+        className={`navbar-wrapper ${isScrolled ? 'navbar-scrolled' : ''}`}
+        style={{ background: navBg }}
+      >
         <div className="container navbar-container">
           <div className="logo-group">
             <div

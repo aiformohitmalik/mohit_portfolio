@@ -8,6 +8,7 @@ import { InternshipsPage } from './pages/InternshipsPage/InternshipsPage';
 import { EdagPage } from './pages/EdagPage/EdagPage';
 import { ChatWidget } from './components/ChatWidget/ChatWidget';
 import { MouseTrail } from './components/MouseTrail/MouseTrail';
+import { StormAudio } from './components/StormAudio/StormAudio';
 
 // Import CSS Design System
 import './styles/tokens.css';
@@ -131,6 +132,7 @@ export const App = () => {
       </div>
       <ChatWidget />
       <MouseTrail />
+      <StormAudio />
     </>
   );
 };
