@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { HeroSection } from './HeroSection';
 import { AboutSection } from './AboutSection';
 import { ExperienceSection } from './ExperienceSection';
@@ -7,10 +7,6 @@ import { EducationSection } from './EducationSection';
 import { ContactSection } from './ContactSection';
 
 export const HomePage = ({ onNavigate }) => {
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
-
   return (
     <div className="page-transition-enter">
       <HeroSection onNavigate={onNavigate} />

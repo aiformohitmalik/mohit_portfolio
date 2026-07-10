@@ -1,7 +1,7 @@
 export const experienceData = [
   {
     id: "edag",
-    company: "EDAG PS INDIA",
+    company: "EDAG INDIA PVT. LTD.",
     role: "Robotic Simulation Engineer",
     location: "Gurgaon, Haryana",
     logoText: "EDAG",

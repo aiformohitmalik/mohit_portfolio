@@ -13,7 +13,7 @@ export const EdagPage = ({ onNavigate }) => {
           <span className="section-label">05 — INDUSTRIAL DEEP-DIVE</span>
           <h1 className="subpage-hero-title">From BIW to Omniverse</h1>
           <div className="subpage-hero-subtitle">
-            <span>EDAG PS INDIA</span>
+            <span>EDAG INDIA PVT. LTD.</span>
             <span style={{ color: 'var(--text-tertiary)' }}>·</span>
             <span>Robotic Simulation & Digital Twin</span>
             <span style={{ color: 'var(--text-tertiary)' }}>·</span>

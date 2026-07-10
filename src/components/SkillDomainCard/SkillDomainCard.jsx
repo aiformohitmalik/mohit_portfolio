@@ -12,6 +12,7 @@ export const SkillDomainCard = ({ category, proficiency, classColor, tagline, sk
   };
 
   const getAccentClass = () => {
+    if (!classColor) return 'purple';
     if (classColor.includes('amber')) return 'amber';
     if (classColor.includes('blue')) return 'blue';
     if (classColor.includes('green')) return 'green';

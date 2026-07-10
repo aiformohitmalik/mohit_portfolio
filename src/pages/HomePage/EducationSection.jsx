@@ -39,10 +39,13 @@ export const EducationSection = ({ onNavigate }) => {
 
           {/* Hashed Link to Campus Story */}
           <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'flex-start' }}>
-            <span 
+            <span
               onClick={() => onNavigate(primary.campusLink)}
               className="redirect-cta-btn"
               style={{ cursor: 'pointer' }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate(primary.campusLink); } }}
             >
               <span>Campus Story: NCC · Karate · Student of the Year</span>
               <ArrowRight size={14} />

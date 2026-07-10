@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Linkedin, Phone, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import { SectionHeading } from '../../components/SectionHeading/SectionHeading';
 import { ContactTile } from '../../components/ContactTile/ContactTile';
 import { personalData } from '../../data/personal';
@@ -271,7 +271,7 @@ export const ContactSection = () => {
       {/* Corporate Standard Footer */}
       <footer className="contact-footer">
         <span className="caption-text" style={{ color: 'var(--text-tertiary)' }}>
-          © 2025 Mohit Malik · Built for Physical AI Roles
+          © {new Date().getFullYear()} Mohit Malik · Built for Physical AI Roles
         </span>
         <span className="mono-text" style={{ color: 'var(--text-tertiary)', fontSize: '11px' }}>
           ROHTAK, INDIA

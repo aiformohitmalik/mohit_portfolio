@@ -10,20 +10,20 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
 
   return (
     <div className="timeline-wrapper" ref={timelineRef}>
-      {/* Central vertical timeline connector bar */}
       <div className="timeline-line" />
-      <div 
-        className="timeline-line-active" 
+      <div
+        className="timeline-line-active"
         style={{ height: isRevealed ? '100%' : '0%' }}
       />
 
-      {/* 1. EDAG PS INDIA - The Technical Anchor */}
-      {experience.find(e => e.id === 'edag') && (() => {
+      {/* 1. EDAG INDIA PVT. LTD. */}
+      {(() => {
         const edag = experience.find(e => e.id === 'edag');
+        if (!edag) return null;
         return (
           <div className="timeline-node" key={edag.id}>
             <div className={`timeline-dot ${isRevealed ? 'timeline-dot-active' : ''}`} />
-            
+
             <div className="timeline-content-card">
               <div className="timeline-header">
                 <div className="timeline-meta">
@@ -34,7 +34,6 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
               </div>
 
               <div className="timeline-body">
-                {/* Phase 2: Omniverse & Digital Twin (Current Primary Focus) */}
                 {edag.phases && edag.phases[0] && (
                   <div className="growth-phase-block" style={{ borderTop: 'none', paddingTop: 0 }}>
                     <div className="growth-phase-header">
@@ -45,9 +44,7 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                     </div>
                     <span className="timeline-date">{edag.phases[0].duration}</span>
                     <ul className="timeline-bullets">
-                      {edag.phases[0].bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
+                      {edag.phases[0].bullets.map((b, i) => <li key={i}>{b}</li>)}
                     </ul>
                     <div className="timeline-chips">
                       {edag.phases[0].skills.map(s => (
@@ -57,7 +54,6 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                   </div>
                 )}
 
-                {/* Vertical Growth Arc Transition indicator */}
                 <div className="growth-arc-container">
                   <div className="growth-arc-indicator">
                     <TrendingUp size={12} />
@@ -65,19 +61,14 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                   </div>
                 </div>
 
-                {/* Phase 1: BIW Plant Automation */}
                 {edag.phases && edag.phases[1] && (
                   <div className="growth-phase-block">
                     <div className="growth-phase-header">
-                      <span className="growth-phase-title">
-                        {edag.phases[1].title}
-                      </span>
+                      <span className="growth-phase-title">{edag.phases[1].title}</span>
                       <span className="timeline-date">{edag.phases[1].duration}</span>
                     </div>
                     <ul className="timeline-bullets">
-                      {edag.phases[1].bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
+                      {edag.phases[1].bullets.map((b, i) => <li key={i}>{b}</li>)}
                     </ul>
                     <div className="timeline-chips">
                       {edag.phases[1].skills.map(s => (
@@ -88,11 +79,13 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                 )}
               </div>
 
-              {/* Optional subpage deep dive link */}
               <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end' }}>
-                <span 
+                <span
                   onClick={() => onNavigate(edag.deepDiveUrl)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate(edag.deepDiveUrl); } }}
                   className="redirect-cta-btn"
+                  role="button"
+                  tabIndex={0}
                   style={{ cursor: 'pointer' }}
                 >
                   <span>EDAG Deep-Dive</span>
@@ -104,9 +97,10 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
         );
       })()}
 
-      {/* 2. Ground Rebotics Pvt. Ltd. - Lighter visual treatment */}
-      {experience.find(e => e.id === 'ground-rebotics') && (() => {
+      {/* 2. Ground Rebotics Pvt. Ltd. */}
+      {(() => {
         const startup = experience.find(e => e.id === 'ground-rebotics');
+        if (!startup) return null;
         return (
           <div className="timeline-node" key={startup.id} style={{ marginBottom: '48px' }}>
             <div className={`timeline-dot ${isRevealed ? 'timeline-dot-active' : ''}`} />
@@ -131,7 +125,6 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                   <span className="badge-solid badge-amber">{startup.fundingBadge}</span>
                   <span className="badge-solid badge-blue">{startup.incubationBadge}</span>
                 </div>
-
                 <ul className="timeline-bullets">
                   {startup.bullets.map((b, i) => (
                     <li key={i} style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>{b}</li>
@@ -139,11 +132,13 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                 </ul>
               </div>
 
-              {/* Founder Page Navigation action */}
               <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end' }}>
-                <span 
+                <span
                   onClick={() => onNavigate(startup.deepDiveUrl)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate(startup.deepDiveUrl); } }}
                   className="redirect-cta-btn"
+                  role="button"
+                  tabIndex={0}
                   style={{ cursor: 'pointer' }}
                 >
                   <span>The Founder Years</span>
@@ -155,16 +150,16 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
         );
       })()}
 
-      {/* 3. Collapsible Internships & Training Accordion Row */}
+      {/* 3. Collapsible Internships & Training */}
       <div className="timeline-node" style={{ paddingLeft: 0 }}>
         <div className={`timeline-dot ${isRevealed ? 'timeline-dot-active' : ''}`} />
-        
+
         <Accordion title="+ 5 Internships & Training (2022–2023)">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {internshipsData.map((intern, idx) => (
-              <div 
-                key={idx} 
-                style={{ 
+              <div
+                key={idx}
+                style={{
                   borderBottom: idx < internshipsData.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
                   paddingBottom: idx < internshipsData.length - 1 ? '16px' : '0'
                 }}
@@ -183,12 +178,14 @@ export const ExperienceTimeline = ({ experience, onNavigate }) => {
                 </ul>
               </div>
             ))}
-            
-            {/* View Full details action */}
+
             <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-end' }}>
-              <span 
+              <span
                 onClick={() => onNavigate('/internships')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate('/internships'); } }}
                 className="redirect-cta-btn"
+                role="button"
+                tabIndex={0}
                 style={{ cursor: 'pointer' }}
               >
                 <span>View Full Details & Learning Path</span>

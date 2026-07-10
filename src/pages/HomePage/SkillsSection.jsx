@@ -38,10 +38,13 @@ export const SkillsSection = ({ onNavigate }) => {
           ))}
         </div>
 
-        <span 
+        <span
           onClick={() => onNavigate('/internships')}
           className="redirect-cta-btn"
           style={{ cursor: 'pointer' }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate('/internships'); } }}
         >
           <span>See Full Certifications & Learning Path</span>
           <ArrowRight size={14} />

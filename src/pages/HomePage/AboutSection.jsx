@@ -34,21 +34,30 @@ export const AboutSection = ({ onNavigate }) => {
           {/* Quick Links Row */}
           <span className="about-quick-links-title">Quick Links</span>
           <div className="about-quick-links">
-            <span 
+            <span
               className="about-link-chip badge-solid badge-amber"
               onClick={() => onNavigate('/ground-rebotics')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate('/ground-rebotics'); } }}
             >
               → The Founder Years
             </span>
-            <span 
+            <span
               className="about-link-chip badge-solid badge-purple"
               onClick={() => onNavigate('/iconnect')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate('/iconnect'); } }}
             >
               → iConnect Story
             </span>
-            <span 
+            <span
               className="about-link-chip badge-solid badge-green"
               onClick={() => onNavigate('/campus')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate('/campus'); } }}
             >
               → Honours & Awards
             </span>

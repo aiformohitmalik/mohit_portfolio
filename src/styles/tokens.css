@@ -53,8 +53,8 @@
   --space-5xl: 128px;
 
   /* Layout Limits */
-  --max-width-content: 1200px;
-  --padding-page: clamp(20px, 5vw, 80px);
+  --max-width-content: 1800px;
+  --padding-page: clamp(20px, 4vw, 56px);
   --section-py: clamp(60px, 8vw, 120px);
   --card-gap: clamp(12px, 2vw, 24px);
 

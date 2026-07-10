@@ -54,7 +54,7 @@
 }
 
 .accordion-panel-expanded {
-  max-height: 500px; /* Safe upper bound for bullet lists */
+  max-height: 2000px; /* Safe upper bound for any accordion content */
   padding-bottom: var(--space-lg);
 }
 

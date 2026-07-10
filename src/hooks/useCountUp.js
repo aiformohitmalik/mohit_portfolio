@@ -12,20 +12,17 @@ export const useCountUp = (target, duration = 1200, trigger = false) => {
   const [count, setCount] = useState("0");
 
   useEffect(() => {
-    // If not triggered yet, keep at zero representation
     if (!trigger) {
       setCount("0");
       return;
     }
 
-    // Instantly show final under prefers-reduced-motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setCount(target);
       return;
     }
 
     const targetStr = String(target);
-    // Parse numbers out, keeping prefix and suffix (e.g., prefix "₹", number 16, suffix "L")
     const numMatch = targetStr.match(/(\d+)/);
     if (!numMatch) {
       setCount(target);
@@ -37,26 +34,28 @@ export const useCountUp = (target, duration = 1200, trigger = false) => {
     const suffix = targetStr.substring(numMatch.index + numMatch[0].length);
 
     let startTimestamp = null;
+    let rafId;
 
     const animate = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const elapsed = timestamp - startTimestamp;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Ease out quad formula: progress * (2 - progress)
+      // Ease out quad
       const easeProgress = progress * (2 - progress);
       const currentVal = Math.floor(easeProgress * numberValue);
 
       setCount(`${prefix}${currentVal}${suffix}`);
 
       if (elapsed < duration) {
-        window.requestAnimationFrame(animate);
+        rafId = window.requestAnimationFrame(animate);
       } else {
         setCount(target);
       }
     };
 
-    window.requestAnimationFrame(animate);
+    rafId = window.requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
   }, [target, duration, trigger]);
 
   return count;

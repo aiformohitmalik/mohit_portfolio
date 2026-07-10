@@ -4,7 +4,7 @@ import './EntityLinkCard.css';
 
 export const EntityLinkCard = ({ title, date, desc, to, onNavigate }) => {
   const handleClick = () => {
-    onNavigate(to);
+    if (onNavigate) onNavigate(to);
   };
 
   return (

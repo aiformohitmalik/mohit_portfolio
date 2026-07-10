@@ -9,7 +9,7 @@ export const ContactTile = ({ type, iconName, label, value, href }) => {
   const handleClick = (e) => {
     if (type === 'email') {
       e.preventDefault();
-      navigator.clipboard.writeText(value);
+      if (navigator.clipboard) navigator.clipboard.writeText(value).catch(() => {});
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     }

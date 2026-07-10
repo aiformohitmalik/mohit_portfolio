@@ -7,6 +7,7 @@ import { CampusPage } from './pages/CampusPage/CampusPage';
 import { InternshipsPage } from './pages/InternshipsPage/InternshipsPage';
 import { EdagPage } from './pages/EdagPage/EdagPage';
 import { ChatWidget } from './components/ChatWidget/ChatWidget';
+import { MouseTrail } from './components/MouseTrail/MouseTrail';
 
 // Import CSS Design System
 import './styles/tokens.css';
@@ -112,7 +113,13 @@ export const App = () => {
       case '/edag':
         return <EdagPage onNavigate={navigateTo} />;
       default:
-        return <HomePage onNavigate={navigateTo} />;
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '16px', textAlign: 'center', padding: '40px' }}>
+            <h1 style={{ fontSize: '48px', fontWeight: 700, color: 'var(--amber-primary)' }}>404</h1>
+            <h2 style={{ fontSize: '20px', color: 'var(--text-primary)' }}>Page not found</h2>
+            <button className="btn btn-primary" onClick={() => navigateTo('/')}>Back to Home</button>
+          </div>
+        );
     }
   };
 
@@ -123,6 +130,7 @@ export const App = () => {
         {renderCurrentPage()}
       </div>
       <ChatWidget />
+      <MouseTrail />
     </>
   );
 };
