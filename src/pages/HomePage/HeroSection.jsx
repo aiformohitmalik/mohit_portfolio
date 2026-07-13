@@ -1,11 +1,11 @@
 import React from 'react';
 import { PhotoFrame } from '../../components/PhotoFrame/PhotoFrame';
-import { MatrixRain } from '../../components/MatrixRain/MatrixRain';
+import { WeatherEngine } from '../../components/WeatherAnimations';
 import { personalData } from '../../data/personal';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import './HeroSection.css';
 
-export const HeroSection = ({ onNavigate }) => {
+export const HeroSection = ({ onNavigate, weather = 'rain' }) => {
   const { scrollY } = useScrollPosition();
 
   const words = "Engineering the boundary between physical and digital worlds.".split(" ");
@@ -22,7 +22,7 @@ export const HeroSection = ({ onNavigate }) => {
 
   return (
     <section id="hero" className="hero-wrapper grid-overlay" style={{ position: 'relative', overflow: 'hidden' }}>
-      <MatrixRain />
+      <WeatherEngine weather={weather} />
       <div className="container hero-grid" style={{ position: 'relative', zIndex: 1 }}>
         <div className="hero-left">
           <span className="section-label hero-label page-transition-enter" style={{ animationDelay: '100ms' }}>

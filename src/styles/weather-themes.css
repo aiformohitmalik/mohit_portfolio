@@ -1,0 +1,224 @@
+/*
+ * Weather-specific theme overrides.
+ * Applied by toggling a class on <html> via App.jsx.
+ *
+ * Design principles applied (Clear Sky):
+ *  — Analogous harmony: entire palette from the blue family (sky blues, cerulean, ocean)
+ *  — Complementary accent: warm amber/gold (sun) for CTAs — opposite blue on the wheel
+ *  — Value hierarchy: deeper cerulean (primary) → ocean blue (secondary) → sky (tertiary)
+ *  — Zero black or near-black; darkest value is a rich cerulean (#0B5394, clearly blue)
+ *  — Frosted glass surfaces: airy, light, depth through translucency
+ */
+
+/* ── CLEAR DAY ──────────────────────────────────────────────────────────────── */
+.weather-clear {
+  /* Backgrounds — airy sky-blue gradient of values */
+  --bg-base:             #BDE0F5;   /* pale sky blue */
+  --bg-page:             #CCE8F7;   /* lighter sky */
+  --bg-surface:          #DCF0FA;   /* card surface */
+  --bg-surface-elevated: #EDF7FD;   /* elevated panels */
+
+  /* Text — analogous blue family, value-stepped for hierarchy, zero black */
+  --text-primary:   #0B5394;   /* deep cerulean — rich, readable, clearly blue */
+  --text-secondary: #1A7EC2;   /* ocean blue */
+  --text-tertiary:  #3D9FD4;   /* sky blue */
+  --text-disabled:  #7DC8E8;   /* pale sky */
+
+  /* Borders — soft sky tones */
+  --border-default: #8EC9E5;
+  --border-active:  #5AAED4;
+  --border-hover:   #3A9EC8;
+
+  /* Amber — complementary to blue on the color wheel; used as the "sun" accent */
+  --amber-primary: #D4820A;
+  --amber-hover:   #B87000;
+  --amber-dim:     #FFE082;
+  --amber-wash:    #FFF8E1;
+
+  /* Blue accent tokens */
+  --blue-primary: #1A7EC2;
+  --blue-dim:     #A2CCE8;
+  --blue-wash:    #D6EEFA;
+
+  /* Green — natural daylight saturation */
+  --green-primary: #27AE60;
+  --green-dim:     #A9DBBE;
+  --green-wash:    #D5F5E3;
+  /* Purple — light lavender tones so badge-purple cards read on sky bg */
+  --purple-primary: #6D4FC2;
+  --purple-dim:     #C4B5F0;
+  --purple-wash:    #EDE9FB;
+}
+
+/* Hero wrapper — canvas sky is the background */
+.weather-clear .hero-wrapper {
+  background: transparent;
+}
+
+/* Hero title — white on sky canvas; blue-on-blue is unreadable */
+.weather-clear .hero-title {
+  color: #ffffff;
+  text-shadow:
+    0 2px 8px rgba(11, 83, 148, 0.55),
+    0 4px 28px rgba(11, 83, 148, 0.28);
+}
+
+/* ── Navbar — frosted sky glass ──────────────────────────────────────────── */
+.weather-clear .navbar {
+  background: rgba(189, 224, 245, 0.75) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(142, 201, 229, 0.55);
+}
+
+.weather-clear .nav-link,
+.weather-clear .navbar-logo {
+  color: var(--text-primary) !important;
+}
+
+.weather-clear .nav-link:hover {
+  color: var(--amber-primary) !important;
+}
+
+/* ── Cards / surfaces — frosted airy glass ───────────────────────────────── */
+.weather-clear .card,
+.weather-clear .skill-card,
+.weather-clear .entity-link-card,
+.weather-clear .stat-block,
+.weather-clear .accordion-item,
+.weather-clear .contact-tile {
+  background: rgba(237, 247, 253, 0.70);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: var(--border-default);
+}
+
+/* ── Primary CTA — amber/gold (sun complement to sky blue) ───────────────── */
+.weather-clear .btn-primary {
+  background: linear-gradient(135deg, #F4A732 0%, #D4820A 100%);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 2px 16px rgba(212, 130, 10, 0.35);
+}
+
+.weather-clear .btn-primary:hover {
+  background: linear-gradient(135deg, #E8960A 0%, #B87000 100%);
+  box-shadow: 0 4px 22px rgba(212, 130, 10, 0.50);
+}
+
+/* Secondary outlined button */
+.weather-clear .btn-secondary {
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+.weather-clear .btn-secondary:hover {
+  background: rgba(90, 174, 212, 0.15);
+  border-color: var(--border-hover);
+}
+
+/* ── Section headings ────────────────────────────────────────────────────── */
+.weather-clear .section-heading-num {
+  color: var(--amber-primary);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+.weather-clear ::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+.weather-clear ::-webkit-scrollbar-thumb {
+  background: var(--border-active);
+  border-radius: 4px;
+}
+
+/* ── Subpage hero banner (Ground Rebotics, EDAG, etc.) ──────────────────────
+   Overrides the hardcoded dark radial gradient                               */
+.weather-clear .subpage-hero {
+  background: linear-gradient(135deg, #BDE0F5 0%, #C8E8F7 55%, #D5EDF8 100%) !important;
+}
+
+.weather-clear .diagonal-lines-bg {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(26, 127, 194, 0.04) 0px,
+    rgba(26, 127, 194, 0.04) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+}
+
+/* ── iConnect hero (extracted from inline style) ─────────────────────────── */
+.weather-clear .iconnect-hero {
+  background: linear-gradient(135deg, #BDE0F5 0%, #C8E8F7 55%, #D5EDF8 100%) !important;
+}
+
+/* ── Campus achievement cards ────────────────────────────────────────────── */
+.weather-clear .campus-achievement-card {
+  background: rgba(237, 247, 253, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--border-default);
+}
+
+/* ── Experience timeline cards ───────────────────────────────────────────── */
+.weather-clear .timeline-content-card {
+  background: rgba(237, 247, 253, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--border-default);
+}
+
+.weather-clear .growth-phase-block {
+  border-top-color: rgba(90, 174, 212, 0.25);
+}
+
+/* ── Ground Rebotics cards ───────────────────────────────────────────────── */
+.weather-clear .op-card {
+  background: rgba(237, 247, 253, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--border-default);
+}
+
+.weather-clear .rec-row:hover {
+  background: rgba(90, 174, 212, 0.08);
+}
+
+/* ── EDAG stack box ──────────────────────────────────────────────────────── */
+.weather-clear .edag-stack-box {
+  background: rgba(237, 247, 253, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--border-default);
+}
+
+/* ── Education section cards ─────────────────────────────────────────────── */
+.weather-clear .education-primary-card,
+.weather-clear .education-secondary-card {
+  background: rgba(237, 247, 253, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--border-default);
+}
+
+/* ── Weather dev toggle — sky-glass pill in clear mode ───────────────────── */
+.weather-clear .weather-toggle {
+  background: rgba(237, 247, 253, 0.82);
+  border-color: rgba(90, 174, 212, 0.50);
+}
+
+.weather-clear .weather-toggle:hover {
+  background: rgba(220, 240, 250, 0.95);
+  border-color: rgba(58, 158, 200, 0.70);
+}
+
+.weather-clear .weather-toggle-label {
+  color: var(--text-primary);
+}
+
+.weather-clear .weather-toggle-dev {
+  color: var(--amber-primary);
+  background: rgba(212, 130, 10, 0.10);
+  border-color: rgba(212, 130, 10, 0.30);
+}

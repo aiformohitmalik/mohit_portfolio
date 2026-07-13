@@ -1,4 +1,8 @@
 /* iConnect sub-page modular stylesheet */
+.iconnect-hero {
+  background: radial-gradient(circle at 10% 20%, #150F2B 0%, #0A0A0A 60%);
+}
+
 .iconnect-hero-quote {
   font-family: var(--font-display);
   font-size: clamp(20px, 4vw, 36px);

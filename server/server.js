@@ -118,6 +118,71 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000);
 
+// ── Weather: IP geo → OpenWeatherMap ─────────────────────────────────────────
+const weatherCache = new Map(); // ip → { data, expiresAt }
+const WEATHER_TTL  = 15 * 60 * 1000; // 15 min
+
+function owmIdToKey(id) {
+  if (id >= 200 && id < 300) return 'thunderstorm';
+  if (id >= 300 && id < 400) return 'drizzle';
+  if (id >= 500 && id < 600) return 'rain';
+  if (id >= 600 && id < 700) return 'snow';
+  if (id >= 700 && id < 800) return 'fog';
+  if (id === 800)             return 'clear';
+  if (id > 800)               return 'cloudy';
+  return 'rain';
+}
+
+app.get('/api/weather', async (req, res) => {
+  const ip = (req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '').replace('::ffff:', '');
+
+  // Serve from cache
+  const cached = weatherCache.get(ip);
+  if (cached && Date.now() < cached.expiresAt) return res.json(cached.data);
+
+  try {
+    // 1. IP → lat/lon (ip-api.com — free, no key, 45 req/min)
+    const isLocal = !ip || ip === '127.0.0.1' || ip === '::1' || ip.startsWith('192.168') || ip.startsWith('10.');
+    let lat, lon, city, country;
+
+    if (isLocal) {
+      // Default to portfolio owner's city for local dev
+      lat = 28.8955; lon = 76.6066; city = 'Rohtak'; country = 'India';
+    } else {
+      const geoRes  = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,city,lat,lon`);
+      const geoData = await geoRes.json();
+      if (geoData.status !== 'success') throw new Error('geo lookup failed');
+      ({ lat, lon, city, country } = geoData);
+    }
+
+    // 2. lat/lon → weather (OpenWeatherMap free tier)
+    const owmKey = process.env.OPENWEATHER_API_KEY;
+    if (!owmKey) {
+      const data = { weather: 'rain', city, country };
+      weatherCache.set(ip, { data, expiresAt: Date.now() + WEATHER_TTL });
+      return res.json(data);
+    }
+
+    const owmRes  = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${owmKey}`);
+    const owmData = await owmRes.json();
+    const condId  = owmData.weather?.[0]?.id ?? 800;
+    const data    = { weather: owmIdToKey(condId), city, country };
+
+    weatherCache.set(ip, { data, expiresAt: Date.now() + WEATHER_TTL });
+    res.json(data);
+  } catch {
+    res.json({ weather: 'rain', city: null, country: null });
+  }
+});
+
+// Prune weather cache every 30 min
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of weatherCache.entries()) {
+    if (now >= entry.expiresAt) weatherCache.delete(key);
+  }
+}, 30 * 60 * 1000);
+
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
   res.json({

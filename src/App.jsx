@@ -8,7 +8,8 @@ import { InternshipsPage } from './pages/InternshipsPage/InternshipsPage';
 import { EdagPage } from './pages/EdagPage/EdagPage';
 import { ChatWidget } from './components/ChatWidget/ChatWidget';
 import { MouseTrail } from './components/MouseTrail/MouseTrail';
-import { StormAudio } from './components/StormAudio/StormAudio';
+import { useWeather } from './hooks/useWeather';
+import { WeatherToggle } from './components/WeatherToggle/WeatherToggle';
 
 // Import CSS Design System
 import './styles/tokens.css';
@@ -18,8 +19,25 @@ import './styles/layout.css';
 import './styles/animations.css';
 import './styles/utilities.css';
 
+const DARK_WEATHERS = new Set(['rain', 'thunderstorm', 'drizzle']);
+
 export const App = () => {
   const [currentRoute, setCurrentRoute] = useState('/');
+  const { weather: apiWeather } = useWeather();
+  const [weatherOverride, setWeatherOverride] = useState(null);
+
+  // Active weather: manual override takes priority over API value
+  const weather = weatherOverride ?? apiWeather;
+
+  // Toggle weather theme class on <html> so CSS token overrides apply globally
+  useEffect(() => {
+    const root = document.documentElement;
+    // Remove any existing weather classes
+    [...root.classList].filter(c => c.startsWith('weather-')).forEach(c => root.classList.remove(c));
+    if (weather && !DARK_WEATHERS.has(weather)) {
+      root.classList.add(`weather-${weather}`);
+    }
+  }, [weather]);
 
   // High performance, robust client-side path router
   useEffect(() => {
@@ -102,7 +120,7 @@ export const App = () => {
   const renderCurrentPage = () => {
     switch (currentRoute) {
       case '/':
-        return <HomePage onNavigate={navigateTo} />;
+        return <HomePage onNavigate={navigateTo} weather={weather} />;
       case '/ground-rebotics':
         return <GroundReboticsPage onNavigate={navigateTo} />;
       case '/iconnect':
@@ -132,7 +150,9 @@ export const App = () => {
       </div>
       <ChatWidget />
       <MouseTrail />
-      <StormAudio />
+      {import.meta.env.DEV && (
+        <WeatherToggle weather={weather} onWeatherChange={setWeatherOverride} />
+      )}
     </>
   );
 };

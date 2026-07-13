@@ -6,10 +6,10 @@ import { SkillsSection } from './SkillsSection';
 import { EducationSection } from './EducationSection';
 import { ContactSection } from './ContactSection';
 
-export const HomePage = ({ onNavigate }) => {
+export const HomePage = ({ onNavigate, weather }) => {
   return (
     <div className="page-transition-enter">
-      <HeroSection onNavigate={onNavigate} />
+      <HeroSection onNavigate={onNavigate} weather={weather} />
       <AboutSection onNavigate={onNavigate} />
       <ExperienceSection onNavigate={onNavigate} />
       <SkillsSection onNavigate={onNavigate} />

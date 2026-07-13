@@ -10,7 +10,7 @@ export const IConnectPage = ({ onNavigate }) => {
   return (
     <PageLayout title="Built to Last" onBack={() => onNavigate('/')}>
       {/* Hero Section */}
-      <section className="subpage-hero" style={{ background: 'radial-gradient(circle at 10% 20%, #150F2B 0%, #0A0A0A 60%)' }}>
+      <section className="subpage-hero iconnect-hero">
         <div className="diagonal-lines-bg" />
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <span className="section-label">02 — LEADERSHIP LEGACY</span>
